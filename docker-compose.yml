@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql
+    ports:
+      - 6603:3306
+    environment:
+      MYSQL_DATABASE: beast
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./data:/var/lib/mysql
+  app:
+    build: .
+    ports:
+    - "8000:3000"
+    command: npm run start
+    volumes:
+    - ./app/client:/usr/src/app/client
+    - ./app/common:/usr/src/app/common
+    - ./app/server:/usr/src/app/server
+    - ./app/package.json:/usr/src/app/package.json
+    environment:
+    - NODE_ENV=dev
+    links:
+    - mysql
+    depends_on:
+    - mysql
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile-admin
+    command: npm run start
+    volumes:
+    - ./admin/app:/usr/src/app/app
+    - ./admin/package.json:/usr/src/app/package.json
+    ports:
+    - "3000:3000"
+    links:
+    - mysql
+    depends_on:
+    - mysql

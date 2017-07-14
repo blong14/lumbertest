@@ -1,0 +1,17 @@
+from node:7.10.1
+
+WORKDIR /usr/src/app
+
+RUN npm install -g lumber-cli
+
+RUN mkdir app
+
+ADD ./admin/package.json /usr/src/app/package.json
+
+RUN npm i
+
+ADD ./admin/app /usr/src/app
+
+EXPOSE 3000
+
+CMD ['npm run start']

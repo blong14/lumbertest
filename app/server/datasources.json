@@ -1,0 +1,12 @@
+{
+  "mysql-dev": {
+    "host": "mysql",
+    "port": 3306,
+    "url": "",
+    "database": "beast",
+    "password": "password",
+    "name": "mysql-dev",
+    "user": "root",
+    "connector": "mysql"
+  }
+}
